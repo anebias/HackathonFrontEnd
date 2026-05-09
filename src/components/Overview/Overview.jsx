@@ -1,77 +1,30 @@
 import { useEffect, useState } from "react";
 
-import caminho from "../assets/imagens/caminho.png";
-import caminhoAtencao from "../assets/imagens/caminho-atencao.png";
-import caminhoCritico from "../assets/imagens/caminho-critico.png";
-import avatarEstavel from "../assets/imagens/avatar-estavel.png";
-import avatarAtencao from "../assets/imagens/avatar-atencao.png";
-import avatarSobPressao from "../assets/imagens/avatar-sobpressao.png";
-import avatarCritico from "../assets/imagens/avatar-critico.png";
+import caminho from "../../assets/imagens/caminho.png";
+import caminhoAtencao from "../../assets/imagens/caminho-atencao.png";
+import caminhoCritico from "../../assets/imagens/caminho-critico.png";
 
-import { IoTrendingUp, IoTrendingDown } from "react-icons/io5";
+import { MetricCards } from "../MetricCards";
 import {
-  FaFaceSmile,
-  FaFaceMeh,
-  FaFaceFrown,
-  FaFaceTired,
-} from "react-icons/fa6";
-import { MdTrendingFlat } from "react-icons/md";
+  useTransactions,
+  useBalances,
+  usePeriods,
+  useCompanies,
+} from "../../context";
 
-import { MetricCards } from "./MetricCards";
-import { useTransactions } from "../context/TransactionsContext";
-import { useBalances } from "../context/BalancesContext";
-import { usePeriods } from "../context/PeriodsContext";
-import { useCompanies } from "../context/EmpresaContext";
-import { getIndicatorsPeriod } from "../utils/financialIndicators";
-import { DaysStability } from "./Overview/DaysStability";
-import { RunwayBadge } from "./Overview/CashRunwayCard/RunwayBadge";
-import { RunwayTimeline } from "./Overview/CashRunwayCard/RunwayTimeline";
-import { RunwayPathImage } from "./Overview/CashRunwayCard/RunwayPathImage";
-import { EmotionalStateCard } from "./Overview/EmotionalStateCard/EmotionalStateCard";
+import { getIndicatorsPeriod } from "../../utils/financialIndicators";
+import {
+  DaysStability,
+  RunwayBadge,
+  RunwayTimeline,
+  RunwayPathImage,
+  RunwayGoal,
+} from "./CashRunwayCard";
 
+import { EmotionalStateCard } from "./EmotionalStateCard";
 
-const emotionalStates = {
-  estavel: {
-    title: "Estável",
-    description: "Sua empresa está operando de forma equilibrada.",
-    trend: "Melhorando",
-    trendIcon: IoTrendingUp,
-    color: "text-success",
-    avatar: avatarEstavel,
-    gaugeValue: 88,
-    emoji: FaFaceSmile,
-  },
-  atencao: {
-    title: "Em Atenção",
-    description: "Alguns indicadores começaram a oscilar.",
-    trend: "Monitorando",
-    trendIcon: MdTrendingFlat,
-    color: "text-warning",
-    avatar: avatarAtencao,
-    gaugeValue: 68,
-    emoji: FaFaceMeh,
-  },
-  sobpressao: {
-    title: "Sob Pressão",
-    description: "Sua empresa está reagindo mais do que planejando.",
-    trend: "Piorando",
-    trendIcon: IoTrendingDown,
-    color: "text-medium",
-    avatar: avatarSobPressao,
-    gaugeValue: 42,
-    emoji: FaFaceFrown,
-  },
-  critico: {
-    title: "Crítico",
-    description: "A estabilidade financeira está em risco.",
-    trend: "Crítico",
-    trendIcon: IoTrendingDown,
-    color: "text-danger",
-    avatar: avatarCritico,
-    gaugeValue: 12,
-    emoji: FaFaceTired,
-  },
-};
+import { emotionalStates } from "../../constants/emotionalStates";
+
 
 const getMarkerPosition = (days) => {
   const safeDays = Math.max(0, Math.min(days, 90));
@@ -231,6 +184,7 @@ const Overview = () => {
     <section className="p-6">
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
         <div className="relative flex min-h-[430px] flex-col overflow-hidden rounded-3xl border border-soft bg-card p-6 shadow-sm xl:col-span-7">
+          
           <div className="relative z-10">
             <h2 className="text-sm font-bold uppercase text-primary">
               Horizonte de Caixa
@@ -256,11 +210,7 @@ const Overview = () => {
             alt="Caminho representando o horizonte de caixa"
           />
 
-          <div className="absolute right-8 top-10 z-10 rounded-2xl border border-soft bg-white/85 p-4 shadow-sm backdrop-blur">
-            <p className="text-xs font-semibold text-primary">Objetivo:</p>
-            <p className="mt-2 text-lg font-bold text-success">90+ dias</p>
-            <p className="text-xs text-success">Zona Segura</p>
-          </div>
+          <RunwayGoal />
 
           <RunwayTimeline 
             hasCompany={!!companySelected?.id}

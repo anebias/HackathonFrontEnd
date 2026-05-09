@@ -1,5 +1,5 @@
 import Navbar from "./components/navbar";
-import Overview from "./components/overview";
+import Overview from "./components/Overview";
 import DashboardGraphs from "./components/DashboardGraphs/dashboardGraphs";
 import Acao from "./components/DashboardGraphs/acao";
 import { AccountsProvider } from "./context/AccountsContext";

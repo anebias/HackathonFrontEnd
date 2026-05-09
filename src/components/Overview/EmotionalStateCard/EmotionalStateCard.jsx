@@ -1,5 +1,6 @@
-import { GiDiamonds } from "react-icons/gi";
 import { EmotionalGauge } from "./EmotionalGauge";
+import { EmotionalFactors } from "./EmotionalFactors";
+import { EmotionalHeader } from "./EmotionalHeader";
 
 export const EmotionalStateCard = ({ hasCompanySelected, emotionalState, emotionalFactors }) => {
     
@@ -7,9 +8,8 @@ export const EmotionalStateCard = ({ hasCompanySelected, emotionalState, emotion
     
     return (
         <div className="rounded-3xl border border-soft bg-card p-6 shadow-sm xl:col-span-3">
-          <h2 className="text-sm font-bold uppercase text-primary">
-            Estado Emocional da Empresa
-          </h2>
+          
+          <EmotionalHeader />
 
           <div className="mt-5 flex items-start justify-between gap-4">
             <div className="flex-1">
@@ -32,6 +32,7 @@ export const EmotionalStateCard = ({ hasCompanySelected, emotionalState, emotion
                   <span>{hasCompanySelected ? emotionalState.trend : "--"}</span>
                   <TrendIcon className="text-base" />
                 </div>
+
               </div>
 
               <div className="mt-6">
@@ -52,23 +53,8 @@ export const EmotionalStateCard = ({ hasCompanySelected, emotionalState, emotion
             </div>
           </div>
 
-          <div className="mt-6 border-t border-soft pt-5">
-            <h4 className="text-xs font-bold text-primary">
-              Principais Fatores
-            </h4>
+          <EmotionalFactors emotionalFactors={emotionalFactors} />
 
-            <div className="mt-4 space-y-3">
-              {emotionalFactors.map((factor) => (
-                <div key={factor} className="flex items-center gap-3">
-                  <div className="flex size-5 items-center justify-center rounded-full bg-blue-100 text-secondary">
-                    <GiDiamonds size={12} />
-                  </div>
-
-                  <p className="text-xs text-primary">{factor}</p>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
     )
 };
